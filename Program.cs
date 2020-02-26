@@ -550,6 +550,7 @@ namespace TextAdventuresCS
 
         private static void GetItem(List<Item> items, string itemToGet, int currentLocation, ref bool stopGame)
         {
+            const int MaxItems = 5;
             string resultForCommand, subCommand = "", subCommandParameter = "";
             int indexOfItem, position;
             bool canGet = false;
@@ -573,6 +574,10 @@ namespace TextAdventuresCS
             else if (items[indexOfItem].Location < MinimumIDForItem && items[indexOfItem].Location != currentLocation)
             {
                 Console.WriteLine("You can't find " + itemToGet + ".");
+            }
+            else if ()
+            {
+
             }
             else
             {
@@ -879,7 +884,16 @@ namespace TextAdventuresCS
                         stopGame = true;
                         break;
                     default:
+                        Random rnd = new Random();
+                        int randomnumber = rnd.Next(1,3);
+                        if (randomnumber == 1)
+                        {
                         Console.WriteLine("Sorry, you don't know how to " + Command + ".");
+                        } else
+                        {
+                            Console.WriteLine("Sorry, i don't know what " + Command + " means.");
+                        }
+                        
                         break;
                 }
             }
