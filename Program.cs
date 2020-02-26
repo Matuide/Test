@@ -551,9 +551,11 @@ namespace TextAdventuresCS
         private static void GetItem(List<Item> items, string itemToGet, int currentLocation, ref bool stopGame)
         {
             const int MaxItems = 5;
+            
             string resultForCommand, subCommand = "", subCommandParameter = "";
             int indexOfItem, position;
             bool canGet = false;
+            int count =3;
             indexOfItem = GetIndexOfItem(itemToGet, -1, items);
             if (indexOfItem == -1)
             {
@@ -575,13 +577,15 @@ namespace TextAdventuresCS
             {
                 Console.WriteLine("You can't find " + itemToGet + ".");
             }
-            else if ()
+            else if (count > MaxItems-1)
             {
-
+                Console.WriteLine("You are carrying too many items");
+                canGet = false;
             }
-            else
+            else if (count < MaxItems)
             {
                 canGet = true;
+                count++;
             }
             if (canGet)
             {
@@ -703,14 +707,43 @@ namespace TextAdventuresCS
             }
             else
             {
-                position = GetPositionOfCommand(Items[indexOfPlayerDie].Commands, "use");
-                ResultForCommand = GetResultForCommand(Items[indexOfPlayerDie].Results, position);
-                playerScore = RollDie(ResultForCommand[5].ToString(), ResultForCommand[7].ToString());
-                Console.WriteLine("You rolled a " + playerScore + ".");
-                position = GetPositionOfCommand(Items[indexOfOtherCharacterDie].Commands, "use");
-                ResultForCommand = GetResultForCommand(Items[indexOfOtherCharacterDie].Results, position);
-                otherCharacterScore = RollDie(ResultForCommand[5].ToString(), ResultForCommand[7].ToString());
-                Console.WriteLine("They rolled a " + otherCharacterScore + ".");
+
+                int player1,player2,player3,character1,character2,character3,temp;
+                Random rnd = new Random();
+                Console.Write("minimum = ");
+                int min = Convert.ToInt32(Console.ReadLine());
+                
+                Console.WriteLine("maximum = ");
+                int max = Convert.ToInt32(Console.ReadLine());
+                player1 = rnd.Next(min,max+1);
+                player2 = rnd.Next(min,max+1);
+                player3 = rnd.Next(min,max+1);
+                character1 = rnd.Next(min,max+1);
+                character2 = rnd.Next(min,max+1);
+                character3 = rnd.Next(min,max+1);
+                Console.WriteLine("You rolled the numbers" + player1 + ", "+ player2 + ", " +player3);
+                Console.WriteLine("they rolled the numbers" + character1 + ", "+ character2 + ", " +character3 );
+                if (player1 < player2) 
+                {   
+                    temp = player1;
+                    player1 = player2;
+                    player2 = temp;
+                }
+                if (player2 < player3) 
+                {   
+                    temp = player2;
+                    player2 = player3;
+                    player3 = temp;
+                }
+                if (player1 < player2) 
+                {   
+                    temp = player1;
+                    player1 = player2;
+                    player2 = temp;
+                }
+
+                playerScore = (player1*100) + (player2*10) + (player3);
+                otherCharacterScore = (character1) + (character2 * 10) + ( character3 * 100);
                 if (playerScore > otherCharacterScore)
                 {
                     Console.WriteLine("You win!");
